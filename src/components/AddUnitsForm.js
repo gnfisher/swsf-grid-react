@@ -15,6 +15,8 @@ export class AddUnitsForm extends Component {
     // stash the objects in state for now
     // this.props.addToFriendlyUnits(friendlyUnits);
     // this.props.addToEnemyUnits(enemyUnits);
+    
+    this.props.toggleForm(); // only execute if form submits properly.
   };
 
   render() {
