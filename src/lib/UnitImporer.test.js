@@ -6,6 +6,12 @@ describe('UnitImporter', () => {
     const units = UnitImporter.getUnitsFromText(textInput);
     expect(Object.keys(units).length).toBe(2);
   });
+
+  it('should skip blank lines', () => {
+    const textInput = "A>B: ISD Gummy\n\nA>B: TI Bears (36)";
+    const units = UnitImporter.getUnitsFromText(textInput);
+    expect(Object.keys(units).length).toBe(2);
+  });
 });
 
 describe('ParseUtility', () => {

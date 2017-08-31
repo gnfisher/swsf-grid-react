@@ -8,16 +8,6 @@
   -webkit-transform: translateY(0);
           transform: translateY(0);
 }
-.add-units-leave {
-  -webkit-transition: all 1s;
-  transition: all 1s;
-  -webkit-transform: translateY(0%);
-          transform: translateY(0%);
-}
-.add-units-leave.add-units-leave-active {
-  -webkit-transform: translateY(-100%);
-          transform: translateY(-100%);
-}
 .field {
   margin-bottom: 40px;
   width: 100%;

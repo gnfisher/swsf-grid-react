@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
+import UnitImporter from '../lib/UnitImporter';
+
 export class AddUnitsForm extends Component {
   createUnits = (event) => {
     event.preventDefault();
     this.refs.btn.setAttribute("disabled", "disabled"); // disable button
 
-    console.log(this.friendlyUnits.value, this.enemyUnits.value);
+    const friendlyUnits = UnitImporter.getUnitsFromText(this.friendlyUnits.value);
+    this.props.addFriendlyUnits(friendlyUnits);
 
-    // get an object with objects from textarea parse
-    // const fiendlyUnits = getUnitsFromText(this.friendlyUnits.value);
-    // const enemyUnits = getUnitsFromText(this.enemyUnits.value);
-    // 
-    // stash the objects in state for now
-    // this.props.addToFriendlyUnits(friendlyUnits);
-    // this.props.addToEnemyUnits(enemyUnits);
+    const enemyUnits = UnitImporter.getUnitsFromText(this.enemyUnits.value);
+    this.props.addEnemyUnits(enemyUnits);
     
     this.props.toggleForm(); // only execute if form submits properly.
   };

@@ -6,8 +6,13 @@ export const UnitImporter = {
   unitObjectsFromStrings: (unitStrings) => {
     // check for blank line, return if so
     // parse lines that are present
+
     const unitsObject = {};
     unitStrings.forEach(string => {
+      if (string === '') {
+        return;
+      }
+
       const location   = ParseUtility.parseLocation(string);
       const heading    = ParseUtility.parseHeading(string);
       const unitType   = ParseUtility.parseUnitType(string);
