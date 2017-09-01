@@ -239,12 +239,28 @@ h2 {
 h3 {
   font-size: 3rem;
 }
+body {
+  margin: 0;
+  padding: 0;
+  background: url("./images/starfield.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
 #board {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   width: 910px;
   margin: 50px auto;
+}
+#board .gridspace-wrapper {
+  position: relative;
+  display: block;
+  width: 130px;
+  height: 130px;
+  padding: 5px;
+}
+#board .gridspace-wrapper--long {
+  height: 650px;
 }
 #board .inner-grid {
   display: -webkit-box;

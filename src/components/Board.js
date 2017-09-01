@@ -9,7 +9,7 @@ export class Board extends Component {
         <div className="inner-grid">
 
         </div>
-        <Gridspace key="Z" long={true} />
+        <Gridspace key="Z" />
       </div>
     );
   }
