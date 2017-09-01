@@ -2,6 +2,16 @@
 @require './_*.styl'
 
 // AddUnitsComponent
+#board
+  display flex
+  width 910px
+  margin 50px auto
+
+  .inner-grid
+    display flex
+    flex-wrap wrap
+    align-content flex-start
+    width 650px
 
 .shadow
   background: rgba(0, 0, 0, 0.5)
@@ -10,12 +20,14 @@
   right: 0
   bottom: 0
   left: 0
+  z-index 99
   
 .add-units-dropdown
   background white
   width 85%
   padding 40px
   margin 0 auto
+  z-indez 999
   
   h2
     color #000000

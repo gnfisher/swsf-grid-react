@@ -239,6 +239,23 @@ h2 {
 h3 {
   font-size: 3rem;
 }
+#board {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 910px;
+  margin: 50px auto;
+}
+#board .inner-grid {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-line-pack: start;
+      align-content: flex-start;
+  width: 650px;
+}
 .shadow {
   background: rgba(0,0,0,0.5);
   position: fixed;
@@ -246,12 +263,14 @@ h3 {
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 99;
 }
 .add-units-dropdown {
   background: #fff;
   width: 85%;
   padding: 40px;
   margin: 0 auto;
+  z-indez: 999;
 }
 .add-units-dropdown h2 {
   color: #000;
