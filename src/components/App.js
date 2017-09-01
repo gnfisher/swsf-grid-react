@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import AddUnitsForm from './AddUnitsForm';
+import Board from './Board';
 
 class App extends Component {
   constructor() {
     super();
-    
+
     this.state = {
       showAddUnitsForm: true,
       friendlyUnits: {},
@@ -30,16 +31,21 @@ class App extends Component {
     this.setState({enemyUnits});
   }
 
+  renderShowAddUnitsForm = () => {
+    return (
+      <AddUnitsForm
+        toggleForm={this.toggleAddUnitsForm}
+        addFriendlyUnits={this.addFriendlyUnits}
+        addEnemyUnits={this.addEnemyUnits}
+      />
+    )
+  }
+
   render() {
     return (
       <div className="App">
-        {this.state.showAddUnitsForm && 
-          <AddUnitsForm 
-            toggleForm={this.toggleAddUnitsForm}
-            addFriendlyUnits={this.addFriendlyUnits}
-            addEnemyUnits={this.addEnemyUnits}
-          />
-        }
+        {this.state.showAddUnitsForm && this.renderShowAddUnitsForm()}
+        <Board />
       </div>
     );
   }

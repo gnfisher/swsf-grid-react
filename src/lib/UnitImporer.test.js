@@ -12,6 +12,12 @@ describe('UnitImporter', () => {
     const units = UnitImporter.getUnitsFromText(textInput);
     expect(Object.keys(units).length).toBe(2);
   });
+
+  it('should alert when there is badly formatted lines', () => {
+    // pass in bad input
+    // expect to get an alert
+    expect(true).toBe(false);
+  });
 });
 
 describe('ParseUtility', () => {

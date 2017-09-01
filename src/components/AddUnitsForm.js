@@ -9,11 +9,9 @@ export class AddUnitsForm extends Component {
     this.refs.btn.setAttribute("disabled", "disabled"); // disable button
 
     const friendlyUnits = UnitImporter.getUnitsFromText(this.friendlyUnits.value);
-    this.props.addFriendlyUnits(friendlyUnits);
-
     const enemyUnits = UnitImporter.getUnitsFromText(this.enemyUnits.value);
+    this.props.addFriendlyUnits(friendlyUnits);
     this.props.addEnemyUnits(enemyUnits);
-    
     this.props.toggleForm(); // only execute if form submits properly.
   };
 
