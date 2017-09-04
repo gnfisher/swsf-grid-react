@@ -15,21 +15,26 @@ export const UnitImporter = {
         return;
       }
 
-      const location   = ParseUtility.parseLocation(string);
-      const heading    = ParseUtility.parseHeading(string);
-      const unitType   = ParseUtility.parseUnitType(string);
-      const name        = ParseUtility.parseName(string);
-      const timestamp = Math.floor(Math.random() * Date.now());
-      const { speed, maneuverability } = units[`${unitType}`];
+      try {
+        const location   = ParseUtility.parseLocation(string);
+        const heading    = ParseUtility.parseHeading(string);
+        const unitType   = ParseUtility.parseUnitType(string);
+        const name        = ParseUtility.parseName(string);
+        const timestamp = Math.floor(Math.random() * Date.now());
+        const { speed, maneuverability } = units[`${unitType}`];
 
-      unitsObject[`unit-${timestamp}`] = { 
-        location,
-        heading,
-        unitType,
-        name,
-        speed,
-        maneuverability
-      };
+        unitsObject[`unit-${timestamp}`] = { 
+          location,
+          heading,
+          unitType,
+          name,
+          speed,
+          maneuverability
+        };
+      }
+      catch (e) {
+        console.error('There was a problem parsing and creating units!', e);
+      }
     });
 
     return unitsObject;
