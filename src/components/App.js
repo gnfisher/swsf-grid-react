@@ -15,21 +15,20 @@ class App extends Component {
 
   toggleAddUnitsForm = () => {
     const newState = !this.state.showAddUnitsForm;
-    console.log(newState);
     this.setState({showAddUnitsForm: !this.state.showAddUnitsForm});
-  }
+  };
 
   addFriendlyUnits = (newFriendlyUnits) => {
     let friendlyUnits = {...this.state.friendlyUnits};
     friendlyUnits = Object.assign(newFriendlyUnits);
     this.setState({friendlyUnits});
-  }
+  };
 
   addEnemyUnits = (newEnemyUnits) => {
     let enemyUnits = {...this.state.enemyUnits};
     enemyUnits = Object.assign(newEnemyUnits);
     this.setState({enemyUnits});
-  }
+  };
 
   renderShowAddUnitsForm = () => {
     return (
@@ -39,7 +38,7 @@ class App extends Component {
         addEnemyUnits={this.addEnemyUnits}
       />
     )
-  }
+  };
 
   render() {
     return (

@@ -4,7 +4,11 @@ import PropTypes from 'prop-types';
 export class Gridspace extends Component {
   isLong = () => {
     return (this.props.long === true ? true : false);
-  }
+  };
+
+  renderUnits = () => {
+    
+  };
 
   render() {
     return (
