@@ -1,10 +1,12 @@
 import React, { Component } form 'react';
+import PropTypes from 'prop-types';
 
 export class Unit extends Component {
 }
 
 Unit.propTypes = {
-  unitType: PropTypes.string.isRequired,
+  unit: PropType.object.isRequired,
+  friendly: PropType.bool.isRequired
 }
 
 export default Unit;
