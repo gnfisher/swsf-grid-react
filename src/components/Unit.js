@@ -1,7 +1,12 @@
-import React, { Component } form 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import PropType from 'prop-types';
 
 export class Unit extends Component {
+  render() {
+    return (
+      <div>Unit!</div>
+    )
+  }
 }
 
 Unit.propTypes = {

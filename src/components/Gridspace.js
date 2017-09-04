@@ -1,19 +1,27 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import Unit from './Unit';
+
 export class Gridspace extends Component {
   isLong = () => {
     return (this.props.long === true ? true : false);
   };
 
-  renderUnits = () => {
-    
+  renderFriendlyUnit = (key) => {
+    return <Unit key={key} id={key} friendly={true} unit={this.props.friendlyUnits[`${key}`]} />;
+  };
+
+  renderEnemyUnit = (key) => {
+    return <Unit key={key} id={key} friendly={false} unit={this.props.enemyUnits[`${key}`]} />;
   };
 
   render() {
     return (
       <div className={"gridspace-wrapper" + (this.isLong() ? ' gridspace-wrapper--long' : '')}>
         <div className="gridspace">
+          {this.props.friendlyUnits.map(this.renderFriendlyUnit)}
+          {this.props.enemyUnits.map(this.renderEnemyUnit)}
         </div>
       </div>
     );
@@ -21,7 +29,10 @@ export class Gridspace extends Component {
 }
 
 Gridspace.propTypes = {
-  long: PropTypes.bool
+  id: PropTypes.string.isRequired,
+  long: PropTypes.bool,
+  friendlyUnits: PropTypes.object,
+  enemyUnits: PropTypes.object
 }
 
 export default Gridspace;

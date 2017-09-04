@@ -44,7 +44,7 @@ class App extends Component {
     return (
       <div className="App">
         {this.state.showAddUnitsForm && this.renderShowAddUnitsForm()}
-        <Board />
+        <Board friendlyUnits={this.state.friendlyUnits} enemyUnits={this.state.enemyUnits} />
       </div>
     );
   }
