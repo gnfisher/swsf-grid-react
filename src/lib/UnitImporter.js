@@ -1,3 +1,5 @@
+import units from './units';
+
 export const UnitImporter = {
   getUnitsFromText: (text) => {
     const unitStrings = ParseUtility.parseByLine(text);
@@ -18,8 +20,16 @@ export const UnitImporter = {
       const unitType   = ParseUtility.parseUnitType(string);
       const name        = ParseUtility.parseName(string);
       const timestamp = Math.floor(Math.random() * Date.now());
+      const { speed, maneuverability } = units[`${unitType}`];
 
-      unitsObject[`unit-${timestamp}`] = { location, heading, unitType, name };
+      unitsObject[`unit-${timestamp}`] = { 
+        location,
+        heading,
+        unitType,
+        name,
+        speed,
+        maneuverability
+      };
     });
 
     return unitsObject;

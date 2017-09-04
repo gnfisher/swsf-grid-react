@@ -12,7 +12,7 @@ export class Board extends Component {
       "F", "G", "H", "I", "J",
       "K", "L", "M", "N", "O",
       "P", "Q", "R", "S", "T",
-      "U", "V", "X", "Y"
+      "U", "V", "W", "X", "Y"
     ];
 
     return gridLetters.map(key => this.createGridspaces(key));
