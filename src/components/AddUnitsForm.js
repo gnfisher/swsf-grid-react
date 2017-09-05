@@ -10,6 +10,10 @@ export class AddUnitsForm extends Component {
 
     const friendlyUnits = UnitImporter.getUnitsFromText(this.friendlyUnits.value);
     const enemyUnits = UnitImporter.getUnitsFromText(this.enemyUnits.value);
+
+    // TODO: If friendly or enemy units has errors key then dont add to state, reset
+    // form and make an alert pop up.
+
     this.props.addFriendlyUnits(friendlyUnits);
     this.props.addEnemyUnits(enemyUnits);
     this.props.toggleForm(); // only execute if form submits properly.

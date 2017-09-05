@@ -31,8 +31,8 @@ export class Gridspace extends Component {
 Gridspace.propTypes = {
   id: PropTypes.string.isRequired,
   long: PropTypes.bool,
-  friendlyUnits: PropTypes.object,
-  enemyUnits: PropTypes.object
+  friendlyUnits: PropTypes.array,
+  enemyUnits: PropTypes.array
 }
 
 export default Gridspace;
