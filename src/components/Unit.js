@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropType from 'prop-types';
-import rocket from '../css/images/rocket.svg';
+import friendlyRocket from '../css/images/rocket.svg';
+import enemyRocket from '../css/images/enemy-rocket.svg';
 
 export class Unit extends Component {
   render() {
     const heading       = this.props.unit.heading;
-    const alliance      = (this.props.friendly ? 'friendly' : 'enemy');
-    const compiledClass = `unit unit--${heading} unit--${alliance}`;
+    const rocket      = (this.props.friendly ? friendlyRocket : enemyRocket);
+    const compiledClass = `unit unit--${heading}`;
 
     return (
       <img src={rocket} className={compiledClass} />
