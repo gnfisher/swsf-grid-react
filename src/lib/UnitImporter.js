@@ -47,9 +47,9 @@ export const UnitImporter = {
     const spaces = Object.keys(unitsObject).map(key => unitsObject[key].location);
     const count = spaces =>
       spaces.reduce((a, b) =>
-        Object.assign(a, {[b]: (a[b] || 0) + 1}), {})
+        Object.assign(a, {[b]: (a[b] || 0) + 1}), {});
     const duplicates = (dict) =>
-      Object.keys(dict).filter((a) => dict[a] > 1)
+      Object.keys(dict).filter((a) => dict[a] > 1);
     if (duplicates(count(spaces)).length > 0) {
       const msg = `You cannot have more than one unit in grid spaces A through Y. You have multiple units in spaces: ${duplicates(count(spaces))}`;
       errors.push({message: msg, line: 'Verify spaces listed please.'});
