@@ -1,5 +1,6 @@
 import units from './units';
 
+// TODO: Rethink and refactor this stuff... 
 export const UnitImporter = {
   getUnitsFromText: (text) => {
     const unitStrings = ParseUtility.parseByLine(text);
@@ -42,6 +43,7 @@ export const UnitImporter = {
       }
     });
 
+    // Check for duplicates
     const spaces = Object.keys(unitsObject).map(key => unitsObject[key].location);
     const count = spaces =>
       spaces.reduce((a, b) =>
@@ -53,10 +55,12 @@ export const UnitImporter = {
       errors.push({message: msg, line: 'Verify spaces listed please.'});
     }
 
+    // return with errors if errors
     if (errors.length > 0) {
       return {errors: errors};
     }
 
+    // return units if all is good
     return unitsObject;
   }
 }
