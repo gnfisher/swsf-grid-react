@@ -281,6 +281,9 @@ body {
   background-image: url("./images/rocket.svg");
   vertical-align: middle;
 }
+#board .gridspace-wrapper .gridspace .unit--enemy {
+  background-image: url("./images/enemy-rocket.svg");
+}
 #board .gridspace-wrapper .gridspace .unit--E {
   -webkit-transform: rotate(90deg);
           transform: rotate(90deg);

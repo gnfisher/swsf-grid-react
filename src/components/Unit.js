@@ -4,8 +4,12 @@ import rocket from '../css/images/rocket.svg';
 
 export class Unit extends Component {
   render() {
+    const heading       = this.props.unit.heading;
+    const alliance      = (this.props.friendly ? 'friendly' : 'enemy');
+    const compiledClass = `unit unit--${heading} unit--${alliance}`;
+
     return (
-      <img src={rocket} className={'unit unit--' + this.props.unit.heading} />
+      <img src={rocket} className={compiledClass} />
     )
   }
 }
