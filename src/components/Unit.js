@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropType from 'prop-types';
+import rocket from '../css/images/rocket.svg';
 
 export class Unit extends Component {
   render() {
     return (
-      <div>Unit!</div>
+      <img src={rocket} className={'unit unit--' + this.props.unit.heading} />
     )
   }
 }
