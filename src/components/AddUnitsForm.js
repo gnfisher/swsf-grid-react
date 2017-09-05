@@ -10,25 +10,31 @@ export class AddUnitsForm extends Component {
 
     const friendlyUnits = UnitImporter.getUnitsFromText(this.friendlyUnits.value);
     const enemyUnits = UnitImporter.getUnitsFromText(this.enemyUnits.value);
-
-    // TODO: If friendly or enemy units has errors key then dont add to state, reset
-    // form and make an alert pop up.
     const combinedUnits = Object.assign(friendlyUnits, enemyUnits);
-    if (Object.keys(combinedUnits).includes('errors')) {
-      // return with errors
-      let errorMsg = "Sorry! Looks like there were some issues with your submission!\n";
-      combinedUnits.errors.forEach((err) => {
-        errorMsg += ` - ${err.message} (Line: ${err.line}) `;
-      });
-      alert(errorMsg);
-      this.refs.addUnitsForm.reset();
-      this.refs.btn.setAttribute("disabled", null);
+
+    if (this.checkForErrors(combinedUnits)) {
       return;
     }
 
     this.props.addFriendlyUnits(friendlyUnits);
     this.props.addEnemyUnits(enemyUnits);
-    this.props.toggleForm(); // only execute if form submits properly.
+    this.props.toggleForm();
+  };
+
+  checkForErrors = (units) => {
+    if (!Object.keys(units).includes('errors')) {
+      return false;
+    }
+
+    let errorMsg = "Sorry! Looks like there were some issues with your submission!\n";
+    units.errors.forEach((err) => {
+      errorMsg += ` - ${err.message} (Line: ${err.line}) `;
+    });
+    alert(errorMsg);
+    this.refs.addUnitsForm.reset();
+    this.refs.btn.setAttribute("disabled", null);
+
+    return true;
   };
 
   render() {

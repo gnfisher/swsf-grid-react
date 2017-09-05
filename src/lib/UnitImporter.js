@@ -74,7 +74,7 @@ export const ParseUtility = {
     try {
       const result = string.match(regex)[0].toUpperCase();
       if (result === '') {
-        throw new Error('Not a valid grid space location!');
+        throw new Error("Not a valid grid space location!");
       }
       return result;
     } catch(e) {
