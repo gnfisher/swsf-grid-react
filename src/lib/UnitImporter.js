@@ -71,27 +71,39 @@ export const ParseUtility = {
   },
   parseLocation: (string) => {
     const regex = /^[A-Za-z]*/;
-    const result = string.match(regex)[0].toUpperCase();
-    if (result === '') {
-      throw new Error('Not a valid grid space location!');
+    try {
+      const result = string.match(regex)[0].toUpperCase();
+      if (result === '') {
+        throw new Error('Not a valid grid space location!');
+      }
+      return result;
+    } catch(e) {
+        throw new Error('No valid grid space location!');
     }
-    return result;
   },
   parseHeading: (string) => {
     const regex = />([A-Za-z]*)/;
-    const result = string.match(regex)[1].toUpperCase();
-    if (result === '') {
-      throw new Error('Not a valid heading!');
+    try {
+      const result = string.match(regex)[1].toUpperCase();
+      if (result === '') {
+        throw new Error('Not a valid heading!');
+      }
+      return result;
+    } catch(e) {
+      throw new Error('No valid heading!');
     }
-    return result;
   },
   parseUnitType: (string) => {
     const regex = /:\s([a-zA-Z\d]*)\s/;
-    const result = string.match(regex)[1];
-    if (result === '') {
+    try {
+      const result = string.match(regex)[1];
+      if (result === '') {
+        throw new Error('No valid unit type present! Check that the line is formatted properly.');
+      }
+      return result;
+    } catch(e) {
       throw new Error('No valid unit type present! Check that the line is formatted properly.');
     }
-    return result;
   },
   parseName: (string) => {
     const regex= /:\s[a-zA-Z\d]*\s([\w\W]*)$/;

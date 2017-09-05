@@ -13,6 +13,18 @@ export class AddUnitsForm extends Component {
 
     // TODO: If friendly or enemy units has errors key then dont add to state, reset
     // form and make an alert pop up.
+    const combinedUnits = Object.assign(friendlyUnits, enemyUnits);
+    if (Object.keys(combinedUnits).includes('errors')) {
+      // return with errors
+      let errorMsg = "Sorry! Looks like there were some issues with your submission!\n";
+      combinedUnits.errors.forEach((err) => {
+        errorMsg += ` - ${err.message} (Line: ${err.line}) `;
+      });
+      alert(errorMsg);
+      this.refs.addUnitsForm.reset();
+      this.refs.btn.setAttribute("disabled", null);
+      return;
+    }
 
     this.props.addFriendlyUnits(friendlyUnits);
     this.props.addEnemyUnits(enemyUnits);
@@ -30,7 +42,7 @@ export class AddUnitsForm extends Component {
           transitionLeave={false}
           >
           <div className="add-units-dropdown">
-            <form action="" className="add-units-form" onSubmit={(e) => this.createUnits(e)}>
+            <form ref="addUnitsForm" action="" className="add-units-form" onSubmit={(e) => this.createUnits(e)}>
               <h2>SWSF Grid Tool</h2>
               <div className="field">
                 <label>
