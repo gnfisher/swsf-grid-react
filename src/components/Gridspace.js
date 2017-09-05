@@ -20,8 +20,8 @@ export class Gridspace extends Component {
     return (
       <div className={"gridspace-wrapper" + (this.isLong() ? ' gridspace-wrapper--long' : '')}>
         <div className="gridspace">
-          {this.props.friendlyUnits.map(this.renderFriendlyUnit)}
-          {this.props.enemyUnits.map(this.renderEnemyUnit)}
+          {Object.keys(this.props.friendlyUnits).map(this.renderFriendlyUnit)}
+          {Object.keys(this.props.enemyUnits).map(this.renderEnemyUnit)}
         </div>
       </div>
     );
@@ -31,8 +31,8 @@ export class Gridspace extends Component {
 Gridspace.propTypes = {
   id: PropTypes.string.isRequired,
   long: PropTypes.bool,
-  friendlyUnits: PropTypes.array,
-  enemyUnits: PropTypes.array
+  friendlyUnits: PropTypes.object,
+  enemyUnits: PropTypes.object
 }
 
 export default Gridspace;

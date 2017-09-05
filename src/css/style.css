@@ -262,6 +262,14 @@ body {
 #board .gridspace-wrapper--long {
   height: 650px;
 }
+#board .gridspace-wrapper .gridspace {
+  width: 100%;
+  height: 100%;
+  border: 2px solid #6cf;
+  border-radius: 5px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
 #board .inner-grid {
   display: -webkit-box;
   display: -ms-flexbox;

@@ -4,10 +4,17 @@ import Gridspace from './Gridspace';
 
 export class Board extends Component {
   unitsWithin = (gridspaceKey, units) => {
-    return Object.keys(units)
-      .filter(key => {
-        return units[`${key}`].location === gridspaceKey;
-    });
+    const unitKeysWithin = (unitKeysArray) => 
+      unitKeysArray.filter(key => 
+        units[`${key}`].location === gridspaceKey);
+
+    const findUnitsByKey = (keysArray) =>
+      keysArray.reduce((unitsObj, key) => {
+        unitsObj[key] = units[key];
+        return unitsObj;
+      }, {});
+
+    return findUnitsByKey(unitKeysWithin(Object.keys(units)));
   };
 
   createGridspaces = (key) => {
