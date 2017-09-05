@@ -10,7 +10,7 @@ export class AddUnitsForm extends Component {
 
     const friendlyUnits = UnitImporter.getUnitsFromText(this.friendlyUnits.value);
     const enemyUnits = UnitImporter.getUnitsFromText(this.enemyUnits.value);
-    const combinedUnits = Object.assign(friendlyUnits, enemyUnits);
+    const combinedUnits = Object.assign({...friendlyUnits}, {...enemyUnits});
 
     if (this.checkForErrors(combinedUnits)) {
       return;
