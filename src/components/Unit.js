@@ -6,7 +6,7 @@ import enemyRocket from '../css/images/enemy-rocket.svg';
 export class Unit extends Component {
   render() {
     const heading       = this.props.unit.heading;
-    const rocket      = (this.props.friendly ? friendlyRocket : enemyRocket);
+    const rocket        = (this.props.friendly ? friendlyRocket : enemyRocket);
     const compiledClass = `unit unit--${heading}`;
 
     return (
