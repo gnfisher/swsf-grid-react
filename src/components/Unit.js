@@ -16,6 +16,7 @@ export class Unit extends Component {
 }
 
 Unit.propTypes = {
+  id: PropType.string.isRequired,
   unit: PropType.object.isRequired,
   friendly: PropType.bool.isRequired
 }
