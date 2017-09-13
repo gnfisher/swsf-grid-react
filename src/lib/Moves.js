@@ -13,7 +13,7 @@ export const canMove = (desiredMove, unit, state) => {
 // present within the gridspace).
 const makeMoves = (possibleMoves, unit) => {
   if (speed < 1) {
-    return possibleMoves;;
+    return possibleMoves;
   }
 
   // Only two max turns per move, left, right, or 180-deg.
@@ -32,10 +32,21 @@ const makeMoves = (possibleMoves, unit) => {
 
 // Returns an array of Unit objects with their state updated to reflect
 // the possible move they have made.
-//
-// returns Array => [{currentLocation, currentHeading, currentTurns, currentSpeed}]
+// * returns Array => [{currentLocation, currentHeading, currentTurns, currentSpeed}]
 const calcNextLocation = (turns, unit) => {
   const nextLocations = [];
+
+  if (unit.location === 'TRANSIT') {
+    const possibleLocations = ['A', 'F', 'K', 'P', 'U'];
+
+    possibleLocations.forEach(location => {
+      const adjustedStats = {location, heading: 'E', speed: unit.speed -1};
+      const nextUnit      = Object.assign({}, {...unit}, adjustedStates);
+      nextLocations.push(nextUnit);
+    };
+  } else if (locationCoords === 'Z');
+
+  const locationCoords = gridCoords[unit.location];
 
   if (turns === 2) {
     // check grid 180-deg
@@ -81,7 +92,11 @@ const occupiedSpaces = (units) => {
 
 const gridCoords = {
   // [-1, ANY] = TRANSIT
-  // [5, ANY] = Z
+  TRANSIT: [-1,0],
+  TRANSIT: [-1,-1],
+  TRANSIT: [-1,-2],
+  TRANSIT: [-1,-3],
+  TRANSIT: [-1,-4],
 
   A: [0,0],
   B: [1,0],
@@ -112,6 +127,19 @@ const gridCoords = {
   W: [2,-4],
   X: [3,-4],
   Y: [4,-4],
+
+  // [5, ANY] = Z
+  Z: [5,0],
+  Z: [5,-1],
+  Z: [5,-2],
+  Z: [5,-3],
+  Z: [5,-4],
+};
+
+const findGridFromCoords = (coords) => {
+  const gridKeys = Object.keys(gridCoords);
+  return gridKeys.find(key =>
+    gridCoords[key] === coords);
 };
 
 export default canMove;
