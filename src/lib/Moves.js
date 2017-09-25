@@ -3,92 +3,200 @@
 export const canMove = (desiredMove, unit, state) => {
   const unavailableSpaces = occupiedSpaces(state);
   const potentialMoves    = makeMoves([], unit);
+  const validMoves        = difference(potentialMoves, unavailableSpaces);
 
-  // exclude unavailableSpaces from possibleMoves
   // return true if desiredMove is in result of above
+  const index = validMoves.indexOf(desiredMove);
+  return (index != -1 ? true : false);
+};
+
+// Removes duplicate elements in an array, NOT DEEP
+const difference = (arr, elementsToRemove) => {
+  elementsToRemove.forEach(el => {
+    const index = arr.indexOf(el);
+    if (index != -1) {
+      arr.splice(index, 1);
+    }
+  });
+
+  return arr;
 };
 
 // Returns an array of grid spaces that are possible legal moves without
 // checking if the moves are valid (ie there is no other unit already
 // present within the gridspace).
 const makeMoves = (possibleMoves, unit) => {
-  if (speed < 1) {
+  // Unit has no more speed left, so return.
+  if (unit.speed < 1) {
     return possibleMoves;
   }
 
-  // Only two max turns per move, left, right, or 180-deg.
-  const possibleTurns = (turns > 2 ? 3 : turns);
-  for (i = 1; i < possibleTurns; i++) {
+  // Only two max turns made per move, left, right, or 180-deg.
+  const possibleTurns = (unit.maneuverability > 2 ? 2 : unit.maneuverability);
+
+  for (let i = 0; i <= possibleTurns; i++) {
     const nextUnits = calcNextLocation(i, unit);
-    const spaces = moves.map(move => move.location); // array of grid spaces moved into
+    const spaces    = nextUnits.map(move => move.location); // array of grid spaces moved into
+    possibleMoves   = possibleMoves.concat(spaces); // add new spaces into possibleMoves
 
-    possibleMoves = possibleMoves.concat(spaces);
-
-    nextUnits.forEach(unit => {
-      makeMoves(possibleMoves, unit.location, unit.heading, unit.turns, unit.speed);
-    });
+    nextUnits.forEach(unit =>
+      makeMoves(possibleMoves, unit));
   }
+
+  return possibleMoves;
 };
 
 // Returns an array of Unit objects with their state updated to reflect
 // the possible move they have made.
 // * returns Array => [{currentLocation, currentHeading, currentTurns, currentSpeed}]
 const calcNextLocation = (turns, unit) => {
-  const nextLocations = [];
-
-  if (unit.location === 'TRANSIT') {
-    const possibleLocations = ['A', 'F', 'K', 'P', 'U'];
-
-    possibleLocations.forEach(location => {
-      const adjustedStats = {location, heading: 'E', speed: unit.speed -1};
-      const nextUnit      = Object.assign({}, {...unit}, adjustedStates);
-      nextLocations.push(nextUnit);
-    };
-  } else if (locationCoords === 'Z');
-
   const locationCoords = gridCoords[unit.location];
+  const nextLocations  = [];
 
+  let adjustedStats, nextLocation, nextHeading, x, y;
+
+  // check grid 180-deg
   if (turns === 2) {
-    // check grid 180-deg
-    // create new unit with speed -1 and turns -2 and new location and save to nextLocations
-  }
-
-  // in each case, check L and R turns
-  // create new unit with speed -1 and turns -1 and new location and save to nextLocations
-  switch (heading) {
-    case 'N':
-      break;
-    case 'E':
-      break;
-    case 'S':
-      break;
-    case 'W':
-      break;
-  }
-
-  nextLocations.forEach(location => {
-    if (locationOnBoard(nextLocation)) {
-      // add valid move to array of potential moves
-      // makeMoves with no lcation and unit - here or level up?
+    switch (unit.heading) {
+      case 'N':
+        y = locationCoords[1] - 1;
+        x = locationCoords[0];
+        nextLocation = [x,y];
+        nextHeading = 'S';
+        break;
+      case 'E':
+        y = locationCoords[1];
+        x = locationCoords[0] - 1;
+        nextLocation = [x,y];
+        nextHeading = 'W';
+        break;
+      case 'S':
+        y = locationCoords[1] + 1;
+        x = locationCoords[0];
+        nextLocation = [x,y];
+        nextHeading = 'N';
+        break;
+      case 'W':
+        y = locationCoords[1];
+        x = locationCoords[0] + 1;
+        nextLocation = [x,y];
+        nextHeading = 'E';
+        break;
     }
-  });
-};
 
-const locationOnBoard = (location) => {
-  // location is on board
-  // then true
+    if (notOnBoard(nextLocation)) {
+      return;
+    }
+
+
+    let nextSpeed = unit.speed - 2;
+    // create new unit with speed -1 and turns -2 and new location and save to nextLocations
+    adjustedStats = {
+      location:        findGridFromCoords(nextLocation),
+      heading:         nextHeading,
+      speed:           nextSpeed,
+      maneuverability: unit.maneuverability - 2
+    };
+
+    nextLocations.push(createNewUnit(unit, adjustedStats));
+  } else if (turns === 1) {
+    // in each case, check R (1) and L (-1) turns
+    [1, -1].forEach((turn) => {
+      switch (unit.heading) {
+        case 'N':
+          y = locationCoords[1];
+          x = locationCoords[0] + turn;
+          nextLocation = [x,y];
+          nextHeading = (turn === 1 ? 'E' : 'W');
+          break;
+        case 'E':
+          y = locationCoords[1] + turn;
+          x = locationCoords[0];
+          nextLocation = [x,y];
+          nextHeading = (turn === 1 ? 'S' : 'N');
+          break;
+        case 'S':
+          y = locationCoords[1] + 1;
+          x = locationCoords[0];
+          nextLocation = [x,y];
+          nextHeading = (turn === 1 ? 'W' : 'E');
+          break;
+        case 'W':
+          y = locationCoords[1];
+          x = locationCoords[0] + 1;
+          nextLocation = [x,y];
+          nextHeading = (turn === 1 ? 'N' : 'S');
+          break;
+      }
+
+      if (notOnBoard(nextLocation)) {
+        return; // not a valid grid location, not on board.
+      }
+
+      let nextSpeed = unit.speed - 1;
+      adjustedStats = {
+        location:        findGridFromCoords(nextLocation),
+        heading:         nextHeading,
+        speed:           nextSpeed,
+        maneuverability: unit.maneuverability - 1
+      };
+
+      nextLocations.push(createNewUnit(unit, adjustedStats));
+    });
+  } else {
+    switch (unit.heading) {
+      case 'N':
+        y = locationCoords[1] + 1;
+        x = locationCoords[0];
+        nextLocation = [x,y];
+        break;
+      case 'E':
+        y = locationCoords[1];
+        x = locationCoords[0] + 1;
+        nextLocation = [x,y];
+        break;
+      case 'S':
+        y = locationCoords[1] - 1;
+        x = locationCoords[0];
+        nextLocation = [x,y];
+        break;
+      case 'W':
+        y = locationCoords[1];
+        x = locationCoords[0] - 1;
+        nextLocation = [x,y];
+        break;
+    }
+
+    if (notOnBoard(nextLocation)) {
+      return; // not a valid grid location, not on board.
+    }
+
+    let nextSpeed = unit.speed - 1;
+    adjustedStats = {
+      location:        findGridFromCoords(nextLocation),
+      speed:           nextSpeed,
+    };
+
+    nextLocations.push(createNewUnit(unit, adjustedStats));
+  }
+
+  return nextLocations;
 };
 
 const occupiedSpaces = (units) => {
-  // Do i need this return?
   return Object.keys(units).map(key => {
     const space = units[`${key}`].location;
     if (space !== 'TRANSIT' && space !== 'Z') {
       return space
+    };
   });
-    }
-  });
-});
+};
+
+export const notOnBoard = (loc) => {
+  // if grid not found will return undefined
+  const grid = findGridFromCoords(loc);
+  return (grid === undefined ? true : false);
+};
 
 const gridCoords = {
   // [-1, ANY] = TRANSIT
@@ -136,10 +244,24 @@ const gridCoords = {
   Z: [5,-4],
 };
 
-const findGridFromCoords = (coords) => {
+export const findGridFromCoords = (coords) => {
   const gridKeys = Object.keys(gridCoords);
   return gridKeys.find(key =>
-    gridCoords[key] === coords);
+    matchingCoords(gridCoords[key], coords));
+};
+
+// Returns clone with updated
+const createNewUnit = (unit, adjustedStats) => {
+  return Object.assign({}, {...unit}, adjustedStats);
+};
+
+// Return true if coords arrays are the same.
+const matchingCoords = (coords1, coords2) => {
+  if (coords1[0] == coords2[0] && coords1[1] == coords2[1]) {
+    return true;
+  }
+
+  return false;
 };
 
 export default canMove;
