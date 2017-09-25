@@ -2,7 +2,7 @@
 // `desiredMove` and false if not.
 export const canMove = (desiredMove, unit, state) => {
   const unavailableSpaces = occupiedSpaces(state);
-  const potentialMoves    = makeMoves(unit.location, unit.heading, unit.turns, unit.speed, []);
+  const potentialMoves    = makeMoves([], unit);
 
   // exclude unavailableSpaces from possibleMoves
   // return true if desiredMove is in result of above
@@ -19,8 +19,8 @@ const makeMoves = (possibleMoves, unit) => {
   // Only two max turns per move, left, right, or 180-deg.
   const possibleTurns = (turns > 2 ? 3 : turns);
   for (i = 1; i < possibleTurns; i++) {
-    const nextUnits    = calcNextLocation(i, unit);
-    const spaces       = moves.map(move => move.location); // array of grid spaces moved into
+    const nextUnits = calcNextLocation(i, unit);
+    const spaces = moves.map(move => move.location); // array of grid spaces moved into
 
     possibleMoves = possibleMoves.concat(spaces);
 
