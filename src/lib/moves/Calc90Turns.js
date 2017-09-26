@@ -58,14 +58,14 @@ export const calcTransit90 = (unit, locationCoords) => {
     nextLocations = ['A', 'F', 'K', 'P', 'U'];
     nextHeading = 'E';
   } else {
-    return;
+    return [];
   }
 
   let nextSpeed = unit.speed - 1;
 
   return nextLocations.map((location) => {
     adjustedStats = {
-      location:        findGridFromCoords(location),
+      location:        location,
       heading:         nextHeading,
       speed:           nextSpeed,
       maneuverability: unit.maneuverability - 1
@@ -83,14 +83,14 @@ export const calcZ90 = (unit, locationCoords) => {
     nextLocations = ['E', 'J', 'O', 'T', 'Y'];
     nextHeading = 'W';
   } else {
-    return;
+    return [];
   }
 
   let nextSpeed = unit.speed - 1;
 
   return nextLocations.map((location) => {
     adjustedStats = {
-      location:        findGridFromCoords(location),
+      location:        location,
       heading:         nextHeading,
       speed:           nextSpeed,
       maneuverability: unit.maneuverability - 1

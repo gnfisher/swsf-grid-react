@@ -28,7 +28,7 @@ export const moveUnit = (unit, locationCoords) => {
   }
 
   if (notOnBoard(nextLocation)) {
-    return; // not a valid grid location, not on board.
+    return []; // not a valid grid location, not on board.
   }
 
   let nextSpeed = unit.speed - 1;
@@ -47,13 +47,15 @@ export const moveUnitTransit = (unit, locationCoords) => {
   if (unit.heading === 'E') {
     nextLocations = ['A', 'F', 'K', 'P', 'U'];
     nextHeading = 'E';
+  } else {
+    return [];
   }
 
   let nextSpeed = unit.speed - 1;
 
   return nextLocations.map((location) => {
     adjustedStats = {
-      location: findGridFromCoords(location),
+      location: location,
       speed:    nextSpeed,
     };
 
@@ -68,13 +70,15 @@ export const moveUnitZ = (unit, locationCoords) => {
   if (unit.heading === 'W') {
     nextLocations = ['E', 'J', 'O', 'T', 'Y'];
     nextHeading = 'W';
+  } else {
+    return [];
   }
 
   let nextSpeed = unit.speed - 1;
 
   return nextLocations.map((location) => {
     adjustedStats = {
-      location: findGridFromCoords(location),
+      location: location,
       speed:    nextSpeed,
     };
 

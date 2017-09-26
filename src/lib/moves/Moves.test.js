@@ -25,4 +25,19 @@ describe('makemoves', () => {
 
     expect(moves.sort()).toEqual(valid_moves.sort());
   });
+
+  it('knows how to handle units in Transit', () => {
+    const unit = {
+      heading: 'N',
+      location: 'TRANSIT',
+      speed: 1,
+      maneuverability: 1
+    };
+    const valid_moves = ['A', 'F', 'K', 'P', 'U'];
+
+    const moves = board_array.filter(
+      (space) => canMove(space, unit, {}));
+
+    expect(moves.sort()).toEqual(valid_moves.sort());
+  });
 });

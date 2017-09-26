@@ -31,7 +31,7 @@ export const calcTurns180 = (unit, locationCoords) => {
   }
 
   if (notOnBoard(nextLocation)) {
-    return;
+    return [];
   }
 
   let nextSpeed = unit.speed - 1;
@@ -42,7 +42,7 @@ export const calcTurns180 = (unit, locationCoords) => {
     maneuverability: unit.maneuverability - 2
   };
 
-  return Array.from(createNewUnit(unit, adjustedStats));
+  return [createNewUnit(unit, adjustedStats)];
 };
 
 export const calcTransit180 = (unit, locationCoords) => {
@@ -52,14 +52,14 @@ export const calcTransit180 = (unit, locationCoords) => {
     nextLocations = ['A', 'F', 'K', 'P', 'U'];
     nextHeading = 'E';
   } else {
-    return;
+    return [];
   }
 
   let nextSpeed = unit.speed - 1;
 
   return nextLocations.map((location) => {
     adjustedStats = {
-      location:        findGridFromCoords(location),
+      location:        location,
       heading:         nextHeading,
       speed:           nextSpeed,
       maneuverability: unit.maneuverability - 2
@@ -76,14 +76,14 @@ export const calcZ180 = (unit, locationCoords) => {
     nextLocations = ['E', 'J', 'O', 'T', 'Y'];
     nextHeading = 'W';
   } else {
-    return;
+    return [];
   }
 
   let nextSpeed = unit.speed - 1;
 
   return nextLocations.map((location) => {
     adjustedStats = {
-      location:        findGridFromCoords(location),
+      location:        location,
       heading:         nextHeading,
       speed:           nextSpeed,
       maneuverability: unit.maneuverability - 2
