@@ -40,4 +40,20 @@ describe('makemoves', () => {
 
     expect(moves.sort()).toEqual(valid_moves.sort());
   });
+
+  it('knows how to handle units in Z', () => {
+    const unit = {
+      heading: 'N',
+      location: 'Z',
+      speed: 1,
+      maneuverability: 1
+    };
+    const valid_moves = ['E', 'J', 'O', 'T', 'Y'];
+
+    const moves = board_array.filter(
+      (space) => canMove(space, unit, {}));
+
+    expect(moves.sort()).toEqual(valid_moves.sort());
+
+  });
 });

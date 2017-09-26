@@ -2,6 +2,9 @@ import { calcTransit180, calcZ180, calcTurns180 } from './Calc180Turns';
 import { calcTransit90, calcZ90, calcTurns90 }from './Calc90Turns';
 import { moveUnitTransit, moveUnitZ, moveUnit }from './CalcMove';
 
+// NOTES:
+// - Allow a unit to rotate if done moving and maneuverability points left?
+
 // Returns true if the unit can move into the grid space passed in as
 // `desiredMove` and false if not.
 export const canMove = (desiredMove, unit, state) => {
@@ -65,8 +68,8 @@ const calcNextLocation = (turns, unit) => {
       180: calcTransit180
     },
     'Z': {
-      90: calcTransit90,
-      180: calcTransit180
+      90: calcZ90,
+      180: calcZ180
     },
     'default': {
       90: calcTurns90,
