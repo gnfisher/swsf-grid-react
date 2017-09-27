@@ -2,7 +2,7 @@ import { calcTransit180, calcZ180, calcTurns180 } from './Calc180Turns';
 import { calcTransit90, calcZ90, calcTurns90 }from './Calc90Turns';
 import { moveUnitTransit, moveUnitZ, moveUnit }from './CalcMove';
 
-// NOTES:
+// TODO NOTES:
 // - Allow a unit to rotate if done moving and maneuverability points left?
 
 // Returns true if the unit can move into the grid space passed in as

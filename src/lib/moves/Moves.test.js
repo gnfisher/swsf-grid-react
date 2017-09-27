@@ -2,7 +2,7 @@ import { canMove } from './Moves';
 
 const board_array = [
   'TRANSIT',
-  'A', 'B', 'C', 'D',' E',
+  'A', 'B', 'C', 'D','E',
   'F', 'G', 'H', 'I', 'J',
   'K', 'L', 'M', 'N', 'O',
   'P', 'Q', 'R', 'S', 'U',
@@ -54,6 +54,5 @@ describe('makemoves', () => {
       (space) => canMove(space, unit, {}));
 
     expect(moves.sort()).toEqual(valid_moves.sort());
-
   });
 });
