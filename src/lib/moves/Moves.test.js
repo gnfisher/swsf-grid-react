@@ -72,7 +72,7 @@ describe('makemoves', () => {
     });
   });
 
-  test.only('knows how to handle units with multiple moves and turns', () => {
+  it('knows how to handle units with multiple moves and turns', () => {
     const unit = {
       heading: 'E',
       location: 'TRANSIT',
@@ -80,8 +80,9 @@ describe('makemoves', () => {
       maneuverability: 3
     };
     const valid_moves = [
+      'TRANSIT',
       'A', 'F', 'K', 'P', 'U',
-      'B', 'G', 'L', 'Q', 'B',
+      'B', 'G', 'L', 'Q', 'V',
       'C', 'H', 'M', 'R', 'W'
     ];
     const moves = board_array.filter(

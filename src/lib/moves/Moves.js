@@ -1,16 +1,27 @@
 import { calcTransit180, calcZ180, calcTurns180 } from './Calc180Turns';
-import { calcTransit90, calcZ90, calcTurns90 }from './Calc90Turns';
-import { moveUnitTransit, moveUnitZ, moveUnit }from './CalcMove';
+import { calcTransit90, calcZ90, calcTurns90 } from './Calc90Turns';
+import { moveUnitTransit, moveUnitZ, moveUnit } from './CalcMove';
 
 // TODO NOTES:
+//
 // - Allow a unit to rotate if done moving and maneuverability points left?
+//
+// So, canMove will need to report true or false, but when a unit moves to
+// a new space, this same makeMoves method must be used to get the STATE of
+// the moved unit (how many speed, manueverability is left).
+//
+// This seems like a use case for some sort of tree... to study and implement
+// later. That will go into the next iteration!
+//
+// Meanwhile, I can return both an Array of spaces, and an Array of all units
+// and their states, to be able to search through them later when setting the
+// new unit's state.
 
 // Returns true if the unit can move into the grid space passed in as
 // `desiredMove` and false if not.
 export const canMove = (desiredMove, unit, state) => {
   const unavailableSpaces = occupiedSpaces(state);
-  const potentialMoves    = makeMoves([], unit);
-  console.log(potentialMoves);
+  const potentialMoves    = makeMoves({possibleMoves: [], units: [unit]});
   const validMoves        = difference(potentialMoves, unavailableSpaces);
 
   // return true if desiredMove is in result of above
@@ -33,23 +44,29 @@ const difference = (arr, elementsToRemove) => {
 // Returns an array of grid spaces that are possible legal moves without
 // checking if the moves are valid (ie there is no other unit already
 // present within the gridspace).
-const makeMoves = (possibleMoves, unit) => {
-  // Unit has no more speed left, so return.
-  if (unit.speed < 1) {
+const makeMoves = ({possibleMoves = [], units = []}) => {
+  let nextUnits = [];
+
+  if (units.length < 1) {
     return possibleMoves;
   }
 
-  // Only two max turns made per move, left, right, or 180-deg.
-  const possibleTurns = (unit.maneuverability > 2 ? 2 : unit.maneuverability);
+  units.forEach((unit) => {
+    if (unit.speed < 1) {
+      return;
+    }
 
-  for (let i = 0; i <= possibleTurns; i++) {
-    const nextUnits = calcNextLocation(i, unit);
-    const spaces    = nextUnits.map(move => move.location); // array of grid spaces moved into
-    possibleMoves   = possibleMoves.concat(spaces); // add new spaces into possibleMoves
+    // Only two max turns made per move, left, right, or 180-deg.
+    const possibleTurns = (unit.maneuverability > 2 ? 2 : unit.maneuverability);
+    let i, spaces;
+    for (i = 0; i <= possibleTurns; i++) {
+      nextUnits     = nextUnits.concat(calcNextLocation(i, unit));
+      spaces  = nextUnits.map(move => move.location);
+      possibleMoves = possibleMoves.concat(spaces);
+    }
+  });
 
-    nextUnits.forEach(unit => {
-     nemakeMoves(possibleMoves, unit));
-  }
+  return makeMoves({possibleMoves, units: nextUnits});
 };
 
 // Returns an array of Unit objects with their state updated to reflect
