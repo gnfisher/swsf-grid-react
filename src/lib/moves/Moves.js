@@ -10,6 +10,7 @@ import { moveUnitTransit, moveUnitZ, moveUnit }from './CalcMove';
 export const canMove = (desiredMove, unit, state) => {
   const unavailableSpaces = occupiedSpaces(state);
   const potentialMoves    = makeMoves([], unit);
+  console.log(potentialMoves);
   const validMoves        = difference(potentialMoves, unavailableSpaces);
 
   // return true if desiredMove is in result of above
@@ -46,11 +47,9 @@ const makeMoves = (possibleMoves, unit) => {
     const spaces    = nextUnits.map(move => move.location); // array of grid spaces moved into
     possibleMoves   = possibleMoves.concat(spaces); // add new spaces into possibleMoves
 
-    nextUnits.forEach(unit =>
-      makeMoves(possibleMoves, unit));
+    nextUnits.forEach(unit => {
+     nemakeMoves(possibleMoves, unit));
   }
-
-  return possibleMoves;
 };
 
 // Returns an array of Unit objects with their state updated to reflect
