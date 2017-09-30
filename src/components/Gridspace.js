@@ -16,9 +16,14 @@ export class Gridspace extends Component {
     return <Unit key={key} id={key} friendly={false} unit={this.props.enemyUnits[`${key}`]} />;
   };
 
+  handleClick = (space) => {
+    // moveUnit(space);
+  };
+
   render() {
     return (
-      <div className={"gridspace-wrapper" + (this.isLong() ? ' gridspace-wrapper--long' : '')}>
+      <div className={"gridspace-wrapper" + (this.isLong() ? ' gridspace-wrapper--long' : '')}
+           onClick={() => this.handleClick(this.props.id)}>
         <div className="gridspace">
           {Object.keys(this.props.friendlyUnits).map(this.renderFriendlyUnit)}
           {Object.keys(this.props.enemyUnits).map(this.renderEnemyUnit)}

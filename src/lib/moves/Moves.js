@@ -17,6 +17,12 @@ import { moveUnitTransit, moveUnitZ, moveUnit } from './CalcMove';
 // and their states, to be able to search through them later when setting the
 // new unit's state.
 
+export const makeUnitMove = (unit, space) => {
+  if (canMove(space, unit, state)) {
+  // Update unit stats in App state
+  }
+};
+
 // Returns true if the unit can move into the grid space passed in as
 // `desiredMove` and false if not.
 export const canMove = (desiredMove, unit, state) => {
