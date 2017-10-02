@@ -37,14 +37,15 @@ export const canMove = (desiredMove, unit, state) => {
 
 // Removes duplicate elements in an array, NOT DEEP
 const difference = (arr, elementsToRemove) => {
+  const modifiedArr = arr.slice(0);
   elementsToRemove.forEach(el => {
-    const index = arr.indexOf(el);
+    const index = modifiedArr.indexOf(el);
     if (index != -1) {
-      arr.splice(index, 1);
+      modifiedArr.splice(index, 1);
     }
   });
 
-  return arr;
+  return modifiedArr;
 };
 
 // Returns an array of grid spaces that are possible legal moves without
