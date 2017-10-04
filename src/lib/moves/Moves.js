@@ -134,11 +134,7 @@ export const notOnBoard = (loc) => {
 
 export const gridCoords = {
   // [-1, ANY] = TRANSIT
-  TRANSIT: [-1,0],
-  TRANSIT: [-1,-1],
-  TRANSIT: [-1,-2],
-  TRANSIT: [-1,-3],
-  TRANSIT: [-1,-4],
+  // [5, ANY] = Z
 
   A: [0,0],
   B: [1,0],
@@ -169,13 +165,6 @@ export const gridCoords = {
   W: [2,-4],
   X: [3,-4],
   Y: [4,-4],
-
-  // [5, ANY] = Z
-  Z: [5,0],
-  Z: [5,-1],
-  Z: [5,-2],
-  Z: [5,-3],
-  Z: [5,-4],
 };
 
 export const findGridFromCoords = (coords) => {
