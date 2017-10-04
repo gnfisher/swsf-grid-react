@@ -18,7 +18,8 @@ import { calcTransit90, calcZ90, calcTurns90 } from './Calc90Turns';
 import { moveUnitTransit, moveUnitZ, moveUnit } from './CalcMove';
 
 // Returns true if the unit can move into the grid space passed in as
-// `desiredMove` and false if not.
+// `desiredMove` and false if not. TODO: Change this to return NULL or a unit
+// object that results from desired move.
 export const canMove = (desiredMove, unit, state) => {
   const unavailableSpaces = occupiedSpaces(state);
   const potentialMoves    = makeMoves({possibleMoves: [], units: [unit]});
