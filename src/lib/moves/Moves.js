@@ -168,6 +168,12 @@ export const gridCoords = {
 };
 
 export const findGridFromCoords = (coords) => {
+  if (coords[0] === -1) {
+    return 'TRANSIT';
+  } else if (coords[0] === 5) {
+    return 'Z';
+  }
+
   const gridKeys = Object.keys(gridCoords);
   return gridKeys.find(key =>
     matchingCoords(gridCoords[key], coords));
