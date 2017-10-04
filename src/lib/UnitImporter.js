@@ -29,7 +29,8 @@ export const UnitImporter = {
           unitType,
           name,
           speed,
-          maneuverability
+          maneuverability,
+          selected: false
         };
       } catch (e) {
         // Catch the 'cannot match against undefined error that is raised when

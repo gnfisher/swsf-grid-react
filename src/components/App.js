@@ -40,6 +40,10 @@ class App extends Component {
 
   selectUnit = (id) => {
     this.setState({selectedUnit: id});
+
+    let friendlyUnits = {...this.state.friendlyUnits};
+    friendlyUnits[id] = Object.assign(friendlyUnits[id], {selected: true});
+    this.setState({friendlyUnits});
   };
 
   moveSelectedUnit = (space) => {
