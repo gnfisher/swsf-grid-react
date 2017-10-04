@@ -45,7 +45,7 @@ export default
     "maneuverability": 1
   },
   "RAF": {
-    "speed": 1,
+    "speed": 2,
     "maneuverability": 2
   },
   "GR75": {

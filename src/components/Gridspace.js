@@ -1,3 +1,4 @@
+import { gameClient } from '../lib/Game';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -17,7 +18,7 @@ export class Gridspace extends Component {
   };
 
   handleClick = (space) => {
-    // moveUnit(space);
+    gameClient.emit('moveSelectedUnit', space);
   };
 
   render() {

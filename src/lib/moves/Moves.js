@@ -23,11 +23,18 @@ import { moveUnitTransit, moveUnitZ, moveUnit } from './CalcMove';
 export const canMove = (desiredMove, unit, state) => {
   const unavailableSpaces = occupiedSpaces(state);
   const potentialMoves    = makeMoves({possibleMoves: [], units: [unit]});
-  const validMoves        = difference(potentialMoves, unavailableSpaces);
+  const validMoves        = difference(potentialMoves.map(u => u.location), unavailableSpaces);
 
   // return true if desiredMove is in result of above
   const index = validMoves.indexOf(desiredMove);
-  return (index != -1 ? true : false);
+  if (index != -1) {
+    // Needs optimizing, grabs first right now, might not be optimal
+    // Also note to prevent making moves if clicking on the same grid space again
+    return potentialMoves.find(
+      unit => unit.location === desiredMove);
+  }
+
+  return false;
 };
 
 // Removes duplicate elements in an array, NOT DEEP
@@ -48,6 +55,7 @@ const difference = (arr, elementsToRemove) => {
 // present within the gridspace).
 const makeMoves = ({possibleMoves = [], units = []}) => {
   let nextUnits = [];
+  let nextPossibleMovies = [];
 
   if (units.length < 1) {
     return possibleMoves;
@@ -62,13 +70,11 @@ const makeMoves = ({possibleMoves = [], units = []}) => {
     const possibleTurns = (unit.maneuverability > 2 ? 2 : unit.maneuverability);
     let i, spaces;
     for (i = 0; i <= possibleTurns; i++) {
-      nextUnits     = nextUnits.concat(calcNextLocation(i, unit));
-      spaces  = nextUnits.map(move => move.location);
-      possibleMoves = possibleMoves.concat(spaces);
+      nextUnits = nextUnits.concat(calcNextLocation(i, unit));
     }
   });
 
-  return makeMoves({possibleMoves, units: nextUnits});
+  return makeMoves({possibleMoves: possibleMoves.concat(nextUnits), units: nextUnits});
 };
 
 // Returns an array of Unit objects with their state updated to reflect

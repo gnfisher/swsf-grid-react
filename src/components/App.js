@@ -52,8 +52,9 @@ class App extends Component {
     }
 
     const unit = this.state.friendlyUnits[this.state.selectedUnit];
+    const allUnits = Object.assign({}, this.state.friendlyUnits, this.state.enemyUnits);
     let newState;
-    if (newState = canMove(space, unit, {...this.state})) {
+    if (newState = canMove(space, unit, allUnits)) {
       let friendlyUnits = {...this.state.friendlyUnits};
       friendlyUnits[this.state.selectedUnit] = newState;
       this.setState({friendlyUnits});
