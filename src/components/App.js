@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
+
 import AddUnitsForm from './AddUnitsForm';
 import Board from './Board';
 
+import { gameClient } from '../lib/Game';
+import { canMove } from '../lib/moves/Moves';
+
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       showAddUnitsForm: true,
       friendlyUnits: {},
-      enemyUnits: {}
+      enemyUnits: {},
+      selectedUnit: null
     };
+
+    gameClient.addListener('selectUnit', this.selectUnit);
+    gameClient.addListener('moveSelectedUnit', this.moveSelectedUnit);
   }
 
   toggleAddUnitsForm = () => {
@@ -28,6 +36,25 @@ class App extends Component {
     let enemyUnits = {...this.state.enemyUnits};
     enemyUnits = Object.assign(newEnemyUnits);
     this.setState({enemyUnits});
+  };
+
+  selectUnit = (id) => {
+    this.setState({selectedUnit: id});
+  };
+
+  moveSelectedUnit = (space) => {
+    if (this.state.selectedUnit === null) {
+      return;
+    }
+
+    const unit = this.state.friendlyUnits[this.state.selectedUnit];
+    let newState;
+    if (newState = canMove(space, unit, {...this.state})) {
+      let friendlyUnits = {...this.state.friendlyUnits};
+      friendlyUnits[this.state.selectedUnit] = newState;
+      this.setState({friendlyUnits});
+      this.setState({selectedUnit: null});
+    }
   };
 
   renderShowAddUnitsForm = () => {
