@@ -56,7 +56,7 @@ class App extends Component {
     let newState;
     if (newState = canMove(space, unit, allUnits)) {
       let friendlyUnits = {...this.state.friendlyUnits};
-      friendlyUnits[this.state.selectedUnit] = newState;
+      friendlyUnits[this.state.selectedUnit] = Object.assign(newState, {selected: false});
       this.setState({friendlyUnits});
       this.setState({selectedUnit: null});
     }
