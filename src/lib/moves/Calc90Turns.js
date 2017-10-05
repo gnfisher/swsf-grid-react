@@ -16,7 +16,7 @@ export const calcTurns90 = (unit, locationCoords) => {
         y = locationCoords[1] + turn;
         x = locationCoords[0];
         nextLocation = [x,y];
-        nextHeading = (turn === 1 ? 'S' : 'N');
+        nextHeading = (turn === 1 ? 'N' : 'S');
         break;
       case 'S':
         y = locationCoords[1] + 1;
@@ -28,7 +28,7 @@ export const calcTurns90 = (unit, locationCoords) => {
         y = locationCoords[1];
         x = locationCoords[0] + 1;
         nextLocation = [x,y];
-        nextHeading = (turn === 1 ? 'N' : 'S');
+        nextHeading = (turn === 1 ? 'S' : 'N');
         break;
     }
 

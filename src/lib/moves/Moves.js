@@ -17,9 +17,10 @@ import { calcTransit180, calcZ180, calcTurns180 } from './Calc180Turns';
 import { calcTransit90, calcZ90, calcTurns90 } from './Calc90Turns';
 import { moveUnitTransit, moveUnitZ, moveUnit } from './CalcMove';
 
-// Returns true if the unit can move into the grid space passed in as
-// `desiredMove` and false if not. TODO: Change this to return NULL or a unit
-// object that results from desired move.
+// If the unit can make desiredMove, the function returns a new unit object
+// reflecting the optimal state of the unit after making necessary turns
+// and moves. If it cannot make the desiredMove (out of range or a unit is
+// already present), false is returned.
 export const canMove = (desiredMove, unit, state) => {
   const unavailableSpaces = occupiedSpaces(state);
   const potentialMoves    = makeMoves({possibleMoves: [], units: [unit]});
@@ -28,14 +29,30 @@ export const canMove = (desiredMove, unit, state) => {
   // return true if desiredMove is in result of above
   const index = validMoves.indexOf(desiredMove);
   if (index != -1) {
-    // Needs optimizing, grabs first right now, might not be optimal
-    // Also note to prevent making moves if clicking on the same grid space again
-    return potentialMoves.find(
-      unit => unit.location === desiredMove);
+    return findOptimalMove(potentialMoves, desiredMove);
   }
 
   return false;
 };
+
+// Returns object sorted first by speed then maneuverability
+const findOptimalMove = (units, desiredMove) => {
+  const sortedMoves = units.filter(unit =>
+    unit.location === desiredMove).sort((a,b) =>
+      a.speed - b.speed || a.manueverability - b.manueverability);
+
+  return sortedMoves[0];
+};
+
+const compare = (prop, a, b) => {
+  if (a[prop] < b[prop]) {
+    return -1;
+  }
+  if (a[prop] > b[prop]) {
+    return 1;
+  }
+  return 0;
+}
 
 // Removes duplicate elements in an array, NOT DEEP
 const difference = (arr, elementsToRemove) => {
