@@ -39,6 +39,9 @@ class App extends Component {
   };
 
   selectUnit = (id) => {
+    if (this.state.selectedUnit !== null) {
+      this.clearSelectedUnit();
+    }
     this.setState({selectedUnit: id});
 
     let friendlyUnits = {...this.state.friendlyUnits};
@@ -61,6 +64,16 @@ class App extends Component {
       this.setState({selectedUnit: null});
     }
   };
+
+  clearSelectedUnit = () => {
+    if (this.state.selectedUnit !== null) {
+      let friendlyUnits = {...this.state.friendlyUnits};
+      let selectedUnit = friendlyUnits[this.state.selectedUnit];
+      friendlyUnits[this.state.selectedUnit] = Object.assign(selectedUnit, {selected: false});
+      this.setState({friendlyUnits});
+      this.setState({selectedUnit: null});
+    }
+  }
 
   renderShowAddUnitsForm = () => {
     return (
