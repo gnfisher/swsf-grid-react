@@ -38,7 +38,16 @@ class App extends Component {
     this.setState({enemyUnits});
   };
 
+  isEnemyUnit = (id) => {
+    const keys = Object.keys(this.state.enemyUnits);
+    return keys.find(unitId => this.enemyUnits[unitId] === id);
+  };
+
   selectUnit = (id) => {
+    if (this.isEnemyUnit(id)) {
+      return;
+    }
+
     if (this.state.selectedUnit !== null) {
       this.clearSelectedUnit();
     }
