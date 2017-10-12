@@ -4,8 +4,8 @@ import Gridspace from './Gridspace';
 
 export class Board extends Component {
   unitsWithin = (gridspaceKey, units) => {
-    const unitKeysWithin = (unitKeysArray) => 
-      unitKeysArray.filter(key => 
+    const unitKeysWithin = (unitKeysArray) =>
+      unitKeysArray.filter(key =>
         units[`${key}`].location === gridspaceKey);
 
     const findUnitsByKey = (keysArray) =>
@@ -22,6 +22,7 @@ export class Board extends Component {
       <Gridspace
         key={key}
         id={key}
+        long={false}
         friendlyUnits={this.unitsWithin(key, this.props.friendlyUnits)}
         enemyUnits={this.unitsWithin(key, this.props.enemyUnits)}
       />
@@ -43,7 +44,7 @@ export class Board extends Component {
   render() {
     return (
       <div id="board">
-        <Gridspace 
+        <Gridspace
           key="TRANSIT"
           id="TRANSIT"
           long={true}
