@@ -21,6 +21,10 @@ export class Gridspace extends Component {
     gameClient.emit('moveSelectedUnit', space);
   };
 
+  // Notes on making this drop target:
+  // - create classes for 'can-drop', 'hover'
+  // - conditionally include these in the className params, but think of a way
+  //   to clean this up and make it not so nasty?
   render() {
     return (
       <div className={"gridspace-wrapper" + (this.isLong() ? ' gridspace-wrapper--long' : '')}
@@ -36,7 +40,7 @@ export class Gridspace extends Component {
 
 Gridspace.propTypes = {
   id: PropTypes.string.isRequired,
-  long: PropTypes.bool,
+  long: PropTypes.bool.isRequired,
   friendlyUnits: PropTypes.object,
   enemyUnits: PropTypes.object
 }
