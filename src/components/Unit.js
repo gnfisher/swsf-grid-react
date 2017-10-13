@@ -10,35 +10,29 @@ const Types = {
 };
 
 const unitSource = {
-  beginDrag(props, monitor, component) {
-    return { id: props.id };
-  },
-
   canDrag(props, monitor) {
     return props.friendly;
+  },
+
+  beginDrag(props, monitor, component) {
+    return { id: props.id };
   }
 };
 
 const collect = (connect, monitor) => {
   return {
-    connectDragSource: connect.dragSource()
+    connectDragSource: connect.dragSource(),
   };
 };
 
 export class Unit extends Component {
-  handleClick = (id) => {
-    gameClient.emit('selectUnit', id);
-  };
-
   render() {
     const { unit, connectDragSource } = this.props;
     const rocket        = (this.props.friendly ? friendlyRocket : enemyRocket);
     const compiledClass = `unit unit--${unit.heading}`;
 
     return connectDragSource(
-      <img src={rocket}
-        className={compiledClass}
-        onClick={() => this.handleClick(this.props.id)} />
+      <img src={rocket} className={compiledClass} />
     )
   }
 }
