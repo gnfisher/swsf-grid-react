@@ -31,9 +31,9 @@ export class Unit extends Component {
   };
 
   render() {
-    const { heading, connectDragSource } = this.props;
+    const { unit, connectDragSource } = this.props;
     const rocket        = (this.props.friendly ? friendlyRocket : enemyRocket);
-    const compiledClass = `unit unit--${heading}`;
+    const compiledClass = `unit unit--${unit.heading}`;
 
     return connectDragSource(
       <img src={rocket}

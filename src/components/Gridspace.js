@@ -16,14 +16,14 @@ const unitGridspaceTarget = {
     const unit     = allUnits[item.id];
     console.log(item, unit);
 
-    // I want to get the current space, and the current unit
-    // returns false or a unit object
     return canMove(id, unit, allUnits);
   },
 
   drop(props, monitor) {
     // This is where we emit change of state of unit dragged, replaces
     // handleClick() functionality.
+    const unit = monitor.getItem();
+    gameClient.emit('moveSelectedUnit', unit.id, props.id);
   }
 };
 
@@ -42,10 +42,6 @@ export class Gridspace extends Component {
 
   renderEnemyUnit = (key) => {
     return <Unit key={key} id={key} friendly={false} unit={this.props.enemyUnits[`${key}`]} />;
-  };
-
-  handleClick = (space) => {
-    gameClient.emit('moveSelectedUnit', space);
   };
 
   setClass = () => {
@@ -70,8 +66,7 @@ export class Gridspace extends Component {
     const { long, id, connectDropTarget } = this.props;
 
     return connectDropTarget(
-      <div className={`gridspace-wrapper ${long && ' gridspace-wrapper--long'}`}
-           onClick={() => this.handleClick(id)}>
+      <div className={`gridspace-wrapper ${long && ' gridspace-wrapper--long'}`}>
         <div className={this.setClass()}>
           {Object.keys(this.props.friendlyUnits).map(this.renderFriendlyUnit)}
           {Object.keys(this.props.enemyUnits).map(this.renderEnemyUnit)}

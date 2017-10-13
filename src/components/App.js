@@ -17,7 +17,6 @@ class App extends Component {
       selectedUnit: null
     };
 
-    gameClient.addListener('selectUnit', this.selectUnit);
     gameClient.addListener('moveSelectedUnit', this.moveSelectedUnit);
   }
 
@@ -43,46 +42,18 @@ class App extends Component {
     return keys.find(unitId => this.enemyUnits[unitId] === id);
   };
 
-  selectUnit = (id) => {
-    if (this.isEnemyUnit(id)) {
-      return;
-    }
+  moveSelectedUnit = (unitId, space) => {
+    const { friendlyUnits, enemyUnits } = this.state;
+    const unit = friendlyUnits[unitId];
+    const allUnits = Object.assign({}, friendlyUnits, enemyUnits);
 
-    if (this.state.selectedUnit !== null) {
-      this.clearSelectedUnit();
-    }
-    this.setState({selectedUnit: id});
-
-    let friendlyUnits = {...this.state.friendlyUnits};
-    friendlyUnits[id] = Object.assign(friendlyUnits[id], {selected: true});
-    this.setState({friendlyUnits});
-  };
-
-  moveSelectedUnit = (space) => {
-    if (this.state.selectedUnit === null) {
-      return;
-    }
-
-    const unit = this.state.friendlyUnits[this.state.selectedUnit];
-    const allUnits = Object.assign({}, this.state.friendlyUnits, this.state.enemyUnits);
-    let newState;
-    if (newState = canMove(space, unit, allUnits)) {
-      let friendlyUnits = {...this.state.friendlyUnits};
-      friendlyUnits[this.state.selectedUnit] = Object.assign(newState, {selected: false});
-      this.setState({friendlyUnits});
-      this.setState({selectedUnit: null});
+    let newUnitState;
+    if (newUnitState = canMove(space, unit, allUnits)) {
+      const newFriendlyUnits = {...friendlyUnits};
+      newFriendlyUnits[unitId] = newUnitState;
+      this.setState({friendlyUnits: newFriendlyUnits});
     }
   };
-
-  clearSelectedUnit = () => {
-    if (this.state.selectedUnit !== null) {
-      let friendlyUnits = {...this.state.friendlyUnits};
-      let selectedUnit = friendlyUnits[this.state.selectedUnit];
-      friendlyUnits[this.state.selectedUnit] = Object.assign(selectedUnit, {selected: false});
-      this.setState({friendlyUnits});
-      this.setState({selectedUnit: null});
-    }
-  }
 
   renderShowAddUnitsForm = () => {
     return (
