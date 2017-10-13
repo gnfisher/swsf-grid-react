@@ -21,7 +21,7 @@ body
 
     &--long
       height 650px
-      
+
     .gridspace
       display inline-block
       width 100%
@@ -33,6 +33,15 @@ body
       vertical-align middle
       text-align center
       
+      &--can-move
+        background-color rgba(0, 229, 255, 0.25)
+      
+      &--is-over-can-move
+        background-color rgba(0, 255, 12, 0.25)
+
+      &--is-over-cant-move
+        background-color rgba(255, 12, 0, 0.25)
+
       .unit
         z-index 9
         width 100px
