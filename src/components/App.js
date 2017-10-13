@@ -3,6 +3,8 @@ import AddUnitsForm from './AddUnitsForm';
 import Board from './Board';
 import { gameClient } from '../lib/Game';
 import { canMove } from '../lib/moves/Moves';
+import HTML5Backend from 'react-dnd-html5-backend';
+import { DragDropContext } from 'react-dnd';
 
 class App extends Component {
   constructor(props) {
@@ -102,4 +104,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default DragDropContext(HTML5Backend)(App);

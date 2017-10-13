@@ -20,7 +20,9 @@ const unitSource = {
 };
 
 const collect = (connect, monitor) => {
-  connectDragSource: connect.dragSource()
+  return {
+    connectDragSource: connect.dragSource()
+  };
 };
 
 export class Unit extends Component {
@@ -29,10 +31,9 @@ export class Unit extends Component {
   };
 
   render() {
-    const heading       = this.props.unit.heading;
+    const { heading, connectDragSource } = this.props;
     const rocket        = (this.props.friendly ? friendlyRocket : enemyRocket);
     const compiledClass = `unit unit--${heading}`;
-    const { connectDragSource } = this.props;
 
     return connectDragSource(
       <img src={rocket}

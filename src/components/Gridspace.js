@@ -9,7 +9,7 @@ const Types = {
 };
 
 const unitGridspaceTarget = {
-  canDrop() {
+  canDrop(props) {
     // This is where we check if the unit can be dropped or not
     return true;
   },
@@ -20,10 +20,11 @@ const unitGridspaceTarget = {
   }
 };
 
-const collect = (connect, monitor) {
+const collect = (connect, monitor) => {
   return {
     connectDropTarget: connect.dropTarget(),
-    isOver: monitor.isOver()
+    isOver: monitor.isOver(),
+    canDrop: monitor.canDrop()
   };
 };
 
@@ -41,7 +42,7 @@ export class Gridspace extends Component {
   };
 
   setClass = () => {
-    const { isOver } = this.props;
+    const { isOver, canDrop } = this.props;
 
     if (!isOver && canDrop) {
       return 'gridspace gridspace--can-move';
@@ -80,4 +81,4 @@ Gridspace.propTypes = {
   enemyUnits: PropTypes.object
 }
 
-export default DropTarget(Types.UNIT, unitGridspaceTarget)(Gridspace);
+export default DropTarget(Types.UNIT, unitGridspaceTarget, collect)(Gridspace);
