@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-
 import AddUnitsForm from './AddUnitsForm';
 import Board from './Board';
-
 import { gameClient } from '../lib/Game';
 import { canMove } from '../lib/moves/Moves';
 
