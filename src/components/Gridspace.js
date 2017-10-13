@@ -1,8 +1,31 @@
-import { gameClient } from '../lib/Game';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import { DropTarget } from 'react-dnd';
 import Unit from './Unit';
+import { gameClient } from '../lib/Game';
+
+const Types = {
+  UNIT: 'unit'
+};
+
+const unitGridspaceTarget = {
+  canDrop() {
+    // This is where we check if the unit can be dropped or not
+    return true;
+  },
+
+  drop(props, monitor) {
+    // This is where we emit change of state of unit dragged, replaces
+    // handleClick() functionality.
+  }
+};
+
+const collect = (connect, monitor) {
+  return {
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver()
+  };
+};
 
 export class Gridspace extends Component {
   renderFriendlyUnit = (key) => {
@@ -18,6 +41,8 @@ export class Gridspace extends Component {
   };
 
   setClass = () => {
+    const { isOver } = this.props;
+
     if (!isOver && canDrop) {
       return 'gridspace gridspace--can-move';
     } else if (isOver && canDrop) {
@@ -29,15 +54,16 @@ export class Gridspace extends Component {
     }
   };
 
-
   // Notes on making this drop target:
-  // - create classes for 'can-drop', 'hover'
-  // - conditionally include these in the className params, but think of a way
-  //   to clean this up and make it not so nasty?
+  // - (DONE) create classes for 'can-drop', 'hover'
+  // - (DONE) conditionally include these in the className params
+  // - make this a DragTarget
   render() {
-    return (
-      <div className={`gridspace-wrapper ${this.props.long && ' gridspace-wrapper--long'}`}
-           onClick={() => this.handleClick(this.props.id)}>
+    const { long, id, connectDropTarget } = this.props;
+
+    return connectDropTarget(
+      <div className={`gridspace-wrapper ${long && ' gridspace-wrapper--long'}`}
+           onClick={() => this.handleClick(id)}>
         <div className={this.setClass()}>
           {Object.keys(this.props.friendlyUnits).map(this.renderFriendlyUnit)}
           {Object.keys(this.props.enemyUnits).map(this.renderEnemyUnit)}
@@ -54,4 +80,4 @@ Gridspace.propTypes = {
   enemyUnits: PropTypes.object
 }
 
-export default Gridspace;
+export default DropTarget(Types.UNIT, unitGridspaceTarget)(Gridspace);

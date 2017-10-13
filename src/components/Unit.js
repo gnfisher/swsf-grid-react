@@ -1,9 +1,27 @@
-import { gameClient } from '../lib/Game';
 import React, { Component } from 'react';
 import PropType from 'prop-types';
-
+import { DragSource } from 'react-dnd';
+import { gameClient } from '../lib/Game';
 import friendlyRocket from '../css/images/rocket.svg';
 import enemyRocket from '../css/images/enemy-rocket.svg';
+
+const Types = {
+  UNIT: 'unit'
+};
+
+const unitSource = {
+  beginDrag(props, monitor, component) {
+    return { id: props.id };
+  },
+
+  canDrag(props, monitor) {
+    return props.friendly;
+  }
+};
+
+const collect = (connect, monitor) => {
+  connectDragSource: connect.dragSource()
+};
 
 export class Unit extends Component {
   handleClick = (id) => {
@@ -14,8 +32,9 @@ export class Unit extends Component {
     const heading       = this.props.unit.heading;
     const rocket        = (this.props.friendly ? friendlyRocket : enemyRocket);
     const compiledClass = `unit unit--${heading}`;
+    const { connectDragSource } = this.props;
 
-    return (
+    return connectDragSource(
       <img src={rocket}
         className={compiledClass}
         onClick={() => this.handleClick(this.props.id)} />
@@ -29,4 +48,4 @@ Unit.propTypes = {
   friendly: PropType.bool.isRequired
 }
 
-export default Unit;
+export default DragSource(Types.UNIT, unitSource, collect)(Unit);
