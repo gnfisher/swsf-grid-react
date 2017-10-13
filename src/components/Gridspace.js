@@ -5,10 +5,6 @@ import PropTypes from 'prop-types';
 import Unit from './Unit';
 
 export class Gridspace extends Component {
-  isLong = () => {
-    return (this.props.long === true ? true : false);
-  };
-
   renderFriendlyUnit = (key) => {
     return <Unit key={key} id={key} friendly={true} unit={this.props.friendlyUnits[`${key}`]} />;
   };
