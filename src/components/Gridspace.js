@@ -3,15 +3,22 @@ import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
 import Unit from './Unit';
 import { gameClient } from '../lib/Game';
+import { canMove } from '../lib/moves/Moves';
 
 const Types = {
   UNIT: 'unit'
 };
 
 const unitGridspaceTarget = {
-  canDrop(props) {
-    // This is where we check if the unit can be dropped or not
-    return true;
+  canDrop(props, monitor) {
+    const { id, allUnits } = props;
+    const item = monitor.getItem();
+    const unit     = allUnits[item.id];
+    console.log(item, unit);
+
+    // I want to get the current space, and the current unit
+    // returns false or a unit object
+    return canMove(id, unit, allUnits);
   },
 
   drop(props, monitor) {
@@ -77,8 +84,9 @@ export class Gridspace extends Component {
 Gridspace.propTypes = {
   id: PropTypes.string.isRequired,
   long: PropTypes.bool.isRequired,
-  friendlyUnits: PropTypes.object,
-  enemyUnits: PropTypes.object
+  friendlyUnits: PropTypes.object.isRequired,
+  enemyUnits: PropTypes.object.isRequired,
+  allUnits: PropTypes.object.isRequired
 }
 
 export default DropTarget(Types.UNIT, unitGridspaceTarget, collect)(Gridspace);

@@ -18,13 +18,17 @@ export class Board extends Component {
   };
 
   createGridspaces = (key) => {
+    const { friendlyUnits, enemyUnits } = this.props;
+    const allUnits = Object.assign({}, friendlyUnits, enemyUnits);
+
     return (
       <Gridspace
         key={key}
         id={key}
         long={false}
-        friendlyUnits={this.unitsWithin(key, this.props.friendlyUnits)}
-        enemyUnits={this.unitsWithin(key, this.props.enemyUnits)}
+        friendlyUnits={this.unitsWithin(key, friendlyUnits)}
+        enemyUnits={this.unitsWithin(key, enemyUnits)}
+        allUnits={allUnits}
       />
     )
   };
@@ -42,14 +46,18 @@ export class Board extends Component {
   }
 
   render() {
+    const { friendlyUnits, enemyUnits } = this.props;
+    const allUnits = Object.assign({}, friendlyUnits, enemyUnits);
+
     return (
       <div id="board">
         <Gridspace
           key="TRANSIT"
           id="TRANSIT"
           long={true}
-          friendlyUnits={this.unitsWithin("TRANSIT", this.props.friendlyUnits)}
-          enemyUnits={this.unitsWithin("TRANSIT", this.props.enemyUnits)}
+          friendlyUnits={this.unitsWithin("TRANSIT", friendlyUnits)}
+          enemyUnits={this.unitsWithin("TRANSIT", enemyUnits)}
+          allUnits ={allUnits}
         />
         <div className="inner-grid">
           {this.renderInnerGrid()}
@@ -58,8 +66,9 @@ export class Board extends Component {
           key="Z"
           id="Z"
           long={true}
-          friendlyUnits={this.unitsWithin("Z", this.props.friendlyUnits)}
-          enemyUnits={this.unitsWithin("Z", this.props.enemyUnits)}
+          friendlyUnits={this.unitsWithin("Z", friendlyUnits)}
+          enemyUnits={this.unitsWithin("Z", enemyUnits)}
+          allUnits={allUnits}
         />
       </div>
     );
