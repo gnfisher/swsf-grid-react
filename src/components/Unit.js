@@ -26,13 +26,19 @@ const collect = (connect, monitor) => {
 };
 
 export class Unit extends Component {
+  handleClick = (id) => {
+    gameClient.emit('selectUnit', id);
+  };
+
   render() {
-    const { unit, connectDragSource } = this.props;
+    const { id, unit, connectDragSource } = this.props;
     const rocket        = (this.props.friendly ? friendlyRocket : enemyRocket);
     const compiledClass = `unit unit--${unit.heading}`;
 
     return connectDragSource(
-      <img src={rocket} className={compiledClass} />
+      <img src={rocket}
+        className={compiledClass}
+        onClick={() => this.handleClick(id)} />
     )
   }
 }

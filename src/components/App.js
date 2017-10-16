@@ -18,6 +18,7 @@ class App extends Component {
     };
 
     gameClient.addListener('moveSelectedUnit', this.moveSelectedUnit);
+    gameClient.addListener('selectUnit', this.selectUnit);
   }
 
   toggleAddUnitsForm = () => {
@@ -40,6 +41,21 @@ class App extends Component {
   isEnemyUnit = (id) => {
     const keys = Object.keys(this.state.enemyUnits);
     return keys.find(unitId => this.enemyUnits[unitId] === id);
+  };
+
+  selectUnit = (id) => {
+    if (this.isEnemyUnit(id)) {
+      return;
+    }
+
+    if (this.state.selectedUnit !== null) {
+      this.clearSelectedUnit();
+    }
+    this.setState({selectedUnit: id});
+
+    let friendlyUnits = {...this.state.friendlyUnits};
+    friendlyUnits[id] = Object.assign(friendlyUnits[id], {selected: true});
+    this.setState({friendlyUnits});
   };
 
   moveSelectedUnit = (unitId, space) => {
