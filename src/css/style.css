@@ -245,6 +245,10 @@ body {
   background: url("./images/starfield.jpg") no-repeat center center fixed;
   background-size: cover;
 }
+.export {
+  color: #ff0;
+  cursor: pointer;
+}
 #board {
   display: -webkit-box;
   display: -ms-flexbox;

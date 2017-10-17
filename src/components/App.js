@@ -6,6 +6,7 @@ import { gameClient } from '../lib/Game';
 import { canMove } from '../lib/moves/Moves';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
+import fileDownload from 'react-file-download';
 
 class App extends Component {
   constructor(props) {
@@ -117,12 +118,33 @@ class App extends Component {
     );
   };
 
+  renderData = () => {
+    const { friendlyUnits, enemyUnits } = this.state;
+
+    const formattedUnits = (units) => {
+      return Object.keys(units).map(key => {
+        const unit = units[key];
+        return `${unit.location}>${unit.heading}: ${unit.type} ${unit.name}`;
+      });
+    };
+
+    // Yeah this is ugly, dont want to burn time fixing indent with string
+    // literals at the moment, though.
+    return `
+Your Units:
+${formattedUnits(friendlyUnits)}
+
+Enemy Units:
+${formattedUnits(enemyUnits)}`;
+  };
+
   render() {
     return (
       <div className="App">
         {this.state.selectedUnit !== null && this.renderHud()}
         {this.state.showAddUnitsForm && this.renderShowAddUnitsForm()}
         <Board friendlyUnits={this.state.friendlyUnits} enemyUnits={this.state.enemyUnits} />
+        <div className="export" onClick={() => fileDownload(this.renderData(), 'grid-export.txt')}>Export</div>
       </div>
     );
   }
