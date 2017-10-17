@@ -1,6 +1,6 @@
-Notes:
+Still under development!
 
-- Register bug report for Safari and initial snapshotting of dragPreview
-  not working. Seems to be very buggy in general in Safari but try to put
-  a specific use case forward and demo repo.
+Known Bugs:
 
+- Drag preivew in safari is buggy, if unit is rotated (facing NORTH or
+  SOUTH) it shows no image when dragging.
