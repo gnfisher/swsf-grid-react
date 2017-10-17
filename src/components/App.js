@@ -41,23 +41,24 @@ class App extends Component {
 
   isEnemyUnit = (id) => {
     const keys = Object.keys(this.state.enemyUnits);
-    return keys.find(unitId => this.enemyUnits[unitId] === id);
+    return keys.find(unitId => unitId === id);
   };
 
   selectUnit = (id) => {
-    if (this.isEnemyUnit(id)) {
-      return;
-    }
-
     if (this.state.selectedUnit !== null) {
       this.clearSelectedUnit();
     }
     this.setState({selectedUnit: id});
 
-    console.log('here');
-    let friendlyUnits = {...this.state.friendlyUnits};
-    friendlyUnits[id] = Object.assign(friendlyUnits[id], {selected: true});
-    this.setState({friendlyUnits});
+    if (this.isEnemyUnit(id)) {
+      let enemyUnits = {...this.state.enemyUnits};
+      enemyUnits[id] = Object.assign(enemyUnits[id], {selected: true});
+      this.setState({enemyUnits});
+    } else {
+      let friendlyUnits = {...this.state.friendlyUnits};
+      friendlyUnits[id] = Object.assign(friendlyUnits[id], {selected: true});
+      this.setState({friendlyUnits});
+    }
   };
 
   moveSelectedUnit = (unitId, space) => {
@@ -70,6 +71,24 @@ class App extends Component {
       const newFriendlyUnits = {...friendlyUnits};
       newFriendlyUnits[unitId] = newUnitState;
       this.setState({friendlyUnits: newFriendlyUnits});
+    }
+  };
+
+  clearSelectedUnit = () => {
+    if (this.state.selectedUnit !== null) {
+      if (this.isEnemyUnit(this.state.selectedUnit)) {
+        let enemyUnits = {...this.state.enemyUnits};
+        let selectedUnit = enemyUnits[this.state.selectedUnit];
+        enemyUnits[this.state.selectedUnit] = Object.assign(selectedUnit, {selected: false});
+        this.setState({enemyUnits});
+      } else {
+        let friendlyUnits = {...this.state.friendlyUnits};
+        let selectedUnit = friendlyUnits[this.state.selectedUnit];
+        friendlyUnits[this.state.selectedUnit] = Object.assign(selectedUnit, {selected: false});
+        this.setState({friendlyUnits});
+      }
+
+      this.setState({selectedUnit: null});
     }
   };
 
