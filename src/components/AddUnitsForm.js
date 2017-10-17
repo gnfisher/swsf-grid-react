@@ -4,15 +4,21 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import UnitImporter from '../lib/UnitImporter';
 
 export class AddUnitsForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { disabled: false }
+  };
+
   createUnits = (event) => {
     event.preventDefault();
-    this.refs.btn.setAttribute("disabled", "disabled"); // disable button
+    this.setState({disabled: true});
 
     const friendlyUnits = UnitImporter.getUnitsFromText(this.friendlyUnits.value);
     const enemyUnits = UnitImporter.getUnitsFromText(this.enemyUnits.value);
     const combinedUnits = Object.assign({...friendlyUnits}, {...enemyUnits});
 
     if (this.checkForErrors(combinedUnits)) {
+      this.setState({disabled: false});
       return;
     }
 
@@ -32,7 +38,6 @@ export class AddUnitsForm extends Component {
     });
     alert(errorMsg);
     this.refs.addUnitsForm.reset();
-    this.refs.btn.setAttribute("disabled", null);
 
     return true;
   };
@@ -74,7 +79,7 @@ export class AddUnitsForm extends Component {
                 />
               </div>
               <div className="field form-buttons">
-                <button ref="btn">Ready!</button>
+                <button ref="btn" disabled={this.state.disbaled}>Ready!</button>
               </div>
             </form>
           </div>

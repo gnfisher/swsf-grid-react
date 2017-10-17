@@ -58,10 +58,6 @@ export class Gridspace extends Component {
     }
   };
 
-  // Notes on making this drop target:
-  // - (DONE) create classes for 'can-drop', 'hover'
-  // - (DONE) conditionally include these in the className params
-  // - make this a DragTarget
   render() {
     const { long, id, connectDropTarget } = this.props;
 
