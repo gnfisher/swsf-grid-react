@@ -31,9 +31,9 @@ export class Unit extends Component {
   };
 
   render() {
-    const { id, unit, connectDragSource } = this.props;
+    const { selected, id, unit, connectDragSource } = this.props;
     const rocket        = (this.props.friendly ? friendlyRocket : enemyRocket);
-    const compiledClass = `unit unit--${unit.heading}`;
+    const compiledClass = `unit unit--${unit.heading} ${selected ? 'unit--selected' : ''}`;
 
     return connectDragSource(
       <img src={rocket}
@@ -46,7 +46,8 @@ export class Unit extends Component {
 Unit.propTypes = {
   id: PropType.string.isRequired,
   unit: PropType.object.isRequired,
-  friendly: PropType.bool.isRequired
+  friendly: PropType.bool.isRequired,
+  selected: PropType.bool.isRequired
 }
 
 export default DragSource(Types.UNIT, unitSource, collect)(Unit);

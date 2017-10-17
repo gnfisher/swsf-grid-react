@@ -143,7 +143,7 @@ ${formattedUnits(enemyUnits)}`;
       <div className="App">
         {this.state.selectedUnit !== null && this.renderHud()}
         {this.state.showAddUnitsForm && this.renderShowAddUnitsForm()}
-        <Board friendlyUnits={this.state.friendlyUnits} enemyUnits={this.state.enemyUnits} />
+        <Board selectedUnit={this.state.selectedUnit} friendlyUnits={this.state.friendlyUnits} enemyUnits={this.state.enemyUnits} />
         <div className="export" onClick={() => fileDownload(this.renderData(), 'grid-export.txt')}>Export</div>
       </div>
     );

@@ -18,7 +18,7 @@ export class Board extends Component {
   };
 
   createGridspaces = (key) => {
-    const { friendlyUnits, enemyUnits } = this.props;
+    const { selectedUnit, friendlyUnits, enemyUnits } = this.props;
     const allUnits = Object.assign({}, friendlyUnits, enemyUnits);
 
     return (
@@ -26,6 +26,7 @@ export class Board extends Component {
         key={key}
         id={key}
         long={false}
+        selectedUnit={selectedUnit}
         friendlyUnits={this.unitsWithin(key, friendlyUnits)}
         enemyUnits={this.unitsWithin(key, enemyUnits)}
         allUnits={allUnits}
@@ -46,7 +47,7 @@ export class Board extends Component {
   }
 
   render() {
-    const { friendlyUnits, enemyUnits } = this.props;
+    const { selectedUnit, friendlyUnits, enemyUnits } = this.props;
     const allUnits = Object.assign({}, friendlyUnits, enemyUnits);
 
     return (
@@ -55,6 +56,7 @@ export class Board extends Component {
           key="TRANSIT"
           id="TRANSIT"
           long={true}
+          selectedUnit={selectedUnit}
           friendlyUnits={this.unitsWithin("TRANSIT", friendlyUnits)}
           enemyUnits={this.unitsWithin("TRANSIT", enemyUnits)}
           allUnits ={allUnits}
@@ -66,6 +68,7 @@ export class Board extends Component {
           key="Z"
           id="Z"
           long={true}
+          selectedUnit={selectedUnit}
           friendlyUnits={this.unitsWithin("Z", friendlyUnits)}
           enemyUnits={this.unitsWithin("Z", enemyUnits)}
           allUnits={allUnits}
@@ -76,6 +79,7 @@ export class Board extends Component {
 }
 
 Board.PropTypes = {
+  selectedUnit: PropTypes.string,
   friendlyUnits: PropTypes.object,
   enemyUnits: PropTypes.object
 }

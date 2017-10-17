@@ -36,12 +36,14 @@ const collect = (connect, monitor) => {
 };
 
 export class Gridspace extends Component {
+  selected = (id) => this.props.selectedUnit === id;
+
   renderFriendlyUnit = (key) => {
-    return <Unit key={key} id={key} friendly={true} unit={this.props.friendlyUnits[key]} />;
+    return <Unit selected={this.selected(key)} key={key} id={key} friendly={true} unit={this.props.friendlyUnits[key]} />;
   };
 
   renderEnemyUnit = (key) => {
-    return <Unit key={key} id={key} friendly={false} unit={this.props.enemyUnits[key]} />;
+    return <Unit selected={this.selected(key)} key={key} id={key} friendly={false} unit={this.props.enemyUnits[key]} />;
   };
 
   setClass = () => {
@@ -75,6 +77,7 @@ export class Gridspace extends Component {
 Gridspace.propTypes = {
   id: PropTypes.string.isRequired,
   long: PropTypes.bool.isRequired,
+  selectedUnit: PropTypes.string,
   friendlyUnits: PropTypes.object.isRequired,
   enemyUnits: PropTypes.object.isRequired,
   allUnits: PropTypes.object.isRequired
