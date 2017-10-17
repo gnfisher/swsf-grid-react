@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AddUnitsForm from './AddUnitsForm';
 import Board from './Board';
+import Hud from './Hud';
 import { gameClient } from '../lib/Game';
 import { canMove } from '../lib/moves/Moves';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -53,6 +54,7 @@ class App extends Component {
     }
     this.setState({selectedUnit: id});
 
+    console.log('here');
     let friendlyUnits = {...this.state.friendlyUnits};
     friendlyUnits[id] = Object.assign(friendlyUnits[id], {selected: true});
     this.setState({friendlyUnits});
@@ -81,9 +83,25 @@ class App extends Component {
     )
   };
 
+  renderHud = () => {
+    // Get full object representation of the unit
+    // Signal if its enemy of friendly
+    const { selectedUnit, friendlyUnits, enemyUnits } = this.state;
+    const allUnits = Object.assign({}, friendlyUnits, enemyUnits);
+    const unit = Object.assign({},
+      allUnits[selectedUnit],
+      {enemy: this.isEnemyUnit(selectedUnit)}
+    );
+
+    return (
+      <Hud selectedUnit={unit} />
+    );
+  };
+
   render() {
     return (
       <div className="App">
+        {this.state.selectedUnit !== null && this.renderHud()}
         {this.state.showAddUnitsForm && this.renderShowAddUnitsForm()}
         <Board friendlyUnits={this.state.friendlyUnits} enemyUnits={this.state.enemyUnits} />
       </div>
